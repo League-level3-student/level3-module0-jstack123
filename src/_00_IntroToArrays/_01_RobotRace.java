@@ -7,27 +7,80 @@ import javax.swing.JOptionPane;
 import org.jointheleague.graphical.robot.Robot;
 
 public class _01_RobotRace {
-	//1. make a main method
+//	1. make a main method
 	Thread[] threads = new Thread[5];
-	 static Random random = new Random();
-		static int rNum = random.nextInt(50);
-	public static void moveRobot(Robot r) {
+	  static boolean race = true;
 		
+	public static void moveRobot(Robot r, int x,int y) {
+		Random random = new Random();
+		 int rNum = random.nextInt(50);
+		
+		r.moveTo(x, y);
+		r.setSpeed(15);
 		r.move(rNum);
+		if(r.getY() < 100) {
+			race = false;
+		}
 	}
 	 public static void main(String[] args) {
 		
 		Thread[] threads = new Thread[5];
-		for (int i = 0; i < threads.length; i++) {
-			threads[i] = new Thread(()->moveRobot(new Robot()));
 		
-			
+		while(race) {
+		for (int i = 0; i < threads.length; i++) {
+			int y = 100;
+			int x = i * (100) + 50; 
+			threads[i] = new Thread(()->{
+				moveRobot(new Robot(), x,500 );
+				
+				
+				
+				
+				
+				
+				});
+			threads[i].start();
+			if(race==false) {
+				int num = i+1;
+				JOptionPane.showMessageDialog(null, "Robot " + num + " wins the race!!!");
+			}
 		}
-//		for (int j = 0; j < threads.length; j++) {
-//			Thread t = new Thread(()->threads[j].move(r));
+	 }
+//		while(thread[1]) {
+//			
 //		}
 		
 	}
+	 
+//	public static void main(String[] args) {
+//		Robot[] robots = new Robot[5];
+//		boolean race = true;
+//
+//		 
+//		for (int i = 0; i < robots.length; i++) {
+//			robots[i] = new Robot();
+//			robots[i].moveTo(i * (100) + 50, 500);
+//		}
+//			
+//			while(race) {
+//				for (int j = 0; j < robots.length; j++) {
+//					
+//					robots[j].setSpeed(50);
+//					Random random = new Random();
+//					 int rNum = random.nextInt(50);
+//					 robots[j].turn(15);
+//					robots[j].move(rNum);
+//					if(robots[j].getY() < 100) {
+//						race = false;
+//						int num = j+1;
+//						JOptionPane.showMessageDialog(null, "Robot " + num + " wins the race!!!");
+//					}
+//				}
+//			}
+//		
+//		
+//	} 
+	
 		//2. create an array of 5 robots.
 
 		//3. use a for loop to initialize the robots.

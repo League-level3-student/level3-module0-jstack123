@@ -7,45 +7,58 @@ import javax.swing.JOptionPane;
 import org.jointheleague.graphical.robot.Robot;
 
 public class _01_RobotRace {
-//	1. make a main method
-	Thread[] threads = new Thread[5];
-	  static boolean race = true;
+ //	1. make a main method
+
+	  
 		
-	public static void moveRobot(Robot r, int x,int y) {
-		Random random = new Random();
-		 int rNum = random.nextInt(50);
-		
-		r.moveTo(x, y);
-		r.setSpeed(15);
-		r.move(rNum);
-		if(r.getY() < 100) {
-			race = false;
-		}
-	}
+//	public static void moveRobot(Robot r, int x,int y) {
+//		Random random = new Random();
+//		 int rNum = random.nextInt(50);
+//	
+//		 r.moveTo(x, y);
+//			r.setSpeed(15);
+//			r.move(rNum);
+//			if(r.getY() < 100) {
+//				race = false;
+//			}
+//	}
+	 
 	 public static void main(String[] args) {
 		
 		Thread[] threads = new Thread[5];
+
 		
-		while(race) {
 		for (int i = 0; i < threads.length; i++) {
-			int y = 100;
+			int y = 600;
 			int x = i * (100) + 50; 
+			int num = i + 1;
 			threads[i] = new Thread(()->{
-				moveRobot(new Robot(), x,500 );
+				boolean race = true;
+				Robot r = new Robot();
+				r.moveTo(x, y);
+				r.setSpeed(15);
+				while(race) {
+					
+				Random random = new Random();
+				 int rNum = random.nextInt(50);
+				 System.out.println(rNum);
 				
-				
-				
-				
-				
-				
+					r.move(rNum);
+					if(r.getY() < 100) {
+						race = false;
+						
+						JOptionPane.showMessageDialog(null, "Robot " + num + " wins the race!!!");
+						break;
+
+					}
+					
+				}
 				});
-			threads[i].start();
-			if(race==false) {
-				int num = i+1;
-				JOptionPane.showMessageDialog(null, "Robot " + num + " wins the race!!!");
-			}
+			
+			threads[i].start();	
+			
 		}
-	 }
+	 
 //		while(thread[1]) {
 //			
 //		}
